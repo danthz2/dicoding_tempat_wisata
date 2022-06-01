@@ -1,4 +1,5 @@
 import 'package:dicoding_tempat_wisata/detail_screen.dart';
+import 'package:dicoding_tempat_wisata/main_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -18,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "Wisata Bandung",
       theme: ThemeData(),
-      home: DetailScreen(),
+      home: MainScreen(),
     );
   }
 }

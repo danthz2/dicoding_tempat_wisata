@@ -1,11 +1,10 @@
+import 'package:dicoding_tempat_wisata/second_screen.dart';
+import 'package:dicoding_tempat_wisata/tourism_place.dart';
 import 'package:flutter/material.dart';
 
-class DetailScreen extends StatefulWidget {
-  @override
-  State<DetailScreen> createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
+class DetailScreen extends StatelessWidget {
+  final TourismPlace place;
+  DetailScreen({required this.place});
   String option = "Op1";
   @override
   Widget build(BuildContext context) {
@@ -14,12 +13,34 @@ class _DetailScreenState extends State<DetailScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Image.asset("images/farm-house.jpg"),
+              Stack(
+                children: [
+                  Image.asset(place.imageAsset),
+                  Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.white60,
+                          child: IconButton(
+                            icon: Icon(Icons.arrow_back),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ),
+                        FavoriteButton()
+                      ],
+                    ),
+                  ),
+                ],
+              ),
               SizedBox(
                 height: 15,
               ),
               Text(
-                "Farm House Lembang",
+                place.name,
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
@@ -37,7 +58,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("Open Everyday")
+                      Text(place.openDays)
                     ],
                   ),
                   Column(
@@ -46,7 +67,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("09.00 - 20.00")
+                      Text(place.openTime)
                     ],
                   ),
                   Column(
@@ -55,7 +76,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("Rp 25.000")
+                      Text(place.ticketPrice)
                     ],
                   ),
                 ],
@@ -66,7 +87,7 @@ class _DetailScreenState extends State<DetailScreen> {
               Container(
                 padding: EdgeInsets.all(16),
                 child: Text(
-                  "Berada di jalur utama Bandung-Lembang, Farm House menjadi objek wisata yang tidak pernah sepi pengunjung. Selain karena letaknya strategis, kawasan ini juga menghadirkan nuansa wisata khas Eropa. Semua itu diterapkan dalam bentuk spot swafoto Instagramable.",
+                  place.description,
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -75,58 +96,53 @@ class _DetailScreenState extends State<DetailScreen> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                            'https://media-cdn.tripadvisor.com/media/photo-s/0d/7c/59/70/farmhouse-lembang.jpg'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                            'https://media-cdn.tripadvisor.com/media/photo-w/13/f0/22/f6/photo3jpg.jpg'),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(
-                            'https://media-cdn.tripadvisor.com/media/photo-m/1280/16/a9/33/43/liburan-di-farmhouse.jpg'),
-                      ),
-                    ),
+                    ...place.imageUrls.map((e) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(e),
+                        ),
+                      );
+                    }).toList()
                   ],
                 ),
               ),
-              DropdownButton(
-                value: option,
-                items: [
-                  DropdownMenuItem(
-                    value: "Op1",
-                    child: Text("Option1"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Op2",
-                    child: Text("Option2"),
-                  ),
-                  DropdownMenuItem(
-                    value: "Op3",
-                    child: Text("Option3"),
-                  ),
-                ],
-                onChanged: (String? value) {
-                  setState(() {
-                    option = value!;
-                  });
-                },
-              ),
+              ElevatedButton(
+                  onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              SecondScreen("text dari halaman 1"),
+                        ),
+                      ),
+                  child: Text("Next Page")),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  @override
+  _FavoriteButtonState createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      backgroundColor: Colors.white60,
+      child: IconButton(
+        icon: Icon(Icons.favorite_border),
+        onPressed: () {
+          setState(() {
+            isFavorite = !isFavorite;
+          });
+        },
       ),
     );
   }
