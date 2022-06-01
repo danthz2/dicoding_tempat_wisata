@@ -1,3 +1,4 @@
+import 'package:dicoding_tempat_wisata/detail_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "Wisata Bandung",
       theme: ThemeData(),
-      home: TextFieldExample(),
+      home: DetailScreen(),
     );
   }
 }
@@ -98,100 +99,6 @@ class _TextFieldExampleState extends State<TextFieldExample> {
                     _isActive = !_isActive;
                   });
                 })
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class DetailScreen extends StatefulWidget {
-  @override
-  State<DetailScreen> createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<DetailScreen> {
-  String option = "Op1";
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Text(
-              "Farm House Lembang",
-              style: TextStyle(
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Column(
-                  children: [
-                    Icon(Icons.calendar_today),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text("Open Everyday")
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.access_time),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text("09.00 - 20.00")
-                  ],
-                ),
-                Column(
-                  children: [
-                    Icon(Icons.monetization_on),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text("Rp 25.000")
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Text(
-                "Berada di jalur utama Bandung-Lembang, Farm House menjadi objek wisata yang tidak pernah sepi pengunjung. Selain karena letaknya strategis, kawasan ini juga menghadirkan nuansa wisata khas Eropa. Semua itu diterapkan dalam bentuk spot swafoto Instagramable.",
-                textAlign: TextAlign.center,
-              ),
-            ),
-            DropdownButton(
-              value: option,
-              items: [
-                DropdownMenuItem(
-                  value: "Op1",
-                  child: Text("Option1"),
-                ),
-                DropdownMenuItem(
-                  value: "Op2",
-                  child: Text("Option2"),
-                ),
-                DropdownMenuItem(
-                  value: "Op3",
-                  child: Text("Option3"),
-                ),
-              ],
-              onChanged: (String? value) {
-                setState(() {
-                  option = value!;
-                });
-              },
-            ),
           ],
         ),
       ),
